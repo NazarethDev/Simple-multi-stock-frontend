@@ -13,7 +13,7 @@ export default function HeaderComponent() {
 
     return (
 
-        <nav className="navbar navbar-expand-lg w-100">
+        <nav className="navbar navbar-expand-lg w-100 overflow-x-hidden">
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/">Multi Stock</NavLink>
                 <button

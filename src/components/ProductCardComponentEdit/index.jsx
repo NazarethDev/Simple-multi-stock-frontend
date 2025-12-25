@@ -12,12 +12,16 @@ export default function ProductCardComponentEdit({ product, onClose }) {
         }));
     }
 
+    useEffect(() => {
+        setQuantities({ ...product.quantity });
+    }, [product])
+
     async function handleSubmit(e) {
         e.preventDefault();
 
         try {
             await updateProduct(product._id, {
-                quantities
+                quantities: quantities
             });
             console.log("produto enviado:", product)
             onClose();

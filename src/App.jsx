@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <HeaderComponent />
-      <main className="container-fluid pt-5 min-vh-100">
+      <main className="container-fluid pt-5 min-vh-100 overflow-x-hidden">
         <AppRoutes />
       </main>
       <FooterComponent />
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

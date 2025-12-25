@@ -7,7 +7,7 @@ export default function InitialPage() {
 
                 <div className="col-12 col-md-6">
                     <Link
-                        to="/expira-breve"
+                        to="/lista-de-validades"
                         className="btn btn-outline-light w-100 py-3"
                     >
                         Lista de validades

@@ -1,6 +1,6 @@
 export default function FooterComponent(){
     return(
-        <div>
+        <div className="mt-3">
             Developed by Nazareth Software House
         </div>
     )

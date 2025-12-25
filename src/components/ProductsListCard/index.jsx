@@ -6,7 +6,7 @@ export default function ProductListCard({ product, onClick }) {
     return (
         <div className="col-12">
             <div
-                className={`card shadow-sm h-100 border-2 ${expirationStyle.border} cursor-pointer`}
+                className={`card shadow-sm h-100 border-2 ${expirationStyle.border} cursor-pointer w-100`}
                 role="button"
                 onClick={() => onClick(product)}
             >
@@ -15,7 +15,7 @@ export default function ProductListCard({ product, onClick }) {
                     {/* Título + data */}
                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
                         <strong
-                            className={`mb-1 mb-sm-0 ${expirationStyle.text}`}
+                            className={`mb-1 mb-sm-0 ${expirationStyle.text} text-truncate`}
                         >
                             {product.name}
                         </strong>
@@ -54,6 +54,11 @@ export default function ProductListCard({ product, onClick }) {
                                 )}
                             </div>
                         )}
+                    </div>
+                    <hr className="my-2 my-md-3" />
+                    <div className="mt-1 d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong>{product.totalQuantity}</strong>
                     </div>
 
                 </div>
