@@ -1,6 +1,6 @@
 import { getExpirationStyle } from "../../utils/expirationStyle.js"
 
-export default function ProductListCard({ product, onClick }) {
+export default function ProductListCardComponent({ product, onClick }) {
     const expirationStyle = getExpirationStyle(product.expiresAt);
 
     return (

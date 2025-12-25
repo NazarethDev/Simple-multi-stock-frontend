@@ -57,6 +57,16 @@ export default function HeaderComponent() {
                         </li>
                         <li className="nav-item">
                             <NavLink
+                                to="/procurar-por-codigo"
+                                className={({ isActive }) =>
+                                    isActive ? "nav-link active" : "nav-link"
+                                }
+                            >
+                                Encontrar por código de barras
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink
                                 to="/estatisticas"
                                 className={({ isActive }) =>
                                     isActive ? "nav-link active" : "nav-link"

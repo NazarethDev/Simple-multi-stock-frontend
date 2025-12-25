@@ -25,6 +25,15 @@ export default function InitialPage() {
 
                 <div className="col-12 col-md-6">
                     <Link
+                        to="/procurar-por-codigo"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Encontrar por código de barras
+                    </Link>
+                </div>
+
+                <div className="col-12 col-md-6">
+                    <Link
                         to="/estatisticas"
                         className="btn btn-outline-light w-100 py-3"
                     >

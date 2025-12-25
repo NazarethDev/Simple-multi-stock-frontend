@@ -4,7 +4,7 @@ import { getExpiringSoonProducts } from "../../services/multiStockApi.js";
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit/index.jsx";
 import PaginationComponent from "../../components/PaginationComponent/index.jsx";
 import DaysFilterComponent from "../../components/FilterDayComponent/index.jsx";
-import ProductListCard from "../../components/ProductsListCard/index.jsx";
+import ProductListCardComponent from "../../components/ProductsListCard/index.jsx";
 
 export default function ProductExpirationDatesPage() {
 
@@ -48,7 +48,7 @@ export default function ProductExpirationDatesPage() {
 
             <div className="row g-3 mt-2">
                 {!loading && products.map(product => (
-                    <ProductListCard
+                    <ProductListCardComponent
                         key={product._id}
                         product={product}
                         onClick={(product) => setSelectedProduct(product)}
