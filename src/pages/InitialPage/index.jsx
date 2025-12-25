@@ -2,11 +2,37 @@ import { Link } from "react-router-dom";
 
 export default function InitialPage() {
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 gap-4">
-            <Link to="/expira-breve" className="btn btn-outline-light rounded w-100" >Validades próximas</Link>
-            <Link to="/novo-produto" className="btn btn-outline-light rounded w-100">Cadastrar novo produto</Link>
-            <Link to="/lista-de-produtos" className="btn btn-outline-light rounded w-100">Lista de produtos</Link>
-            <Link to="/estatisticas" className="btn btn-outline-light rounded w-100">Estatísticas</Link>
+        <div className="container mt-4">
+            <div className="row g-3">
+
+                <div className="col-12 col-md-6">
+                    <Link
+                        to="/expira-breve"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Lista de validades
+                    </Link>
+                </div>
+
+                <div className="col-12 col-md-6">
+                    <Link
+                        to="/novo-produto"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Cadastrar novo produto
+                    </Link>
+                </div>
+
+                <div className="col-12 col-md-6">
+                    <Link
+                        to="/estatisticas"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Estatísticas
+                    </Link>
+                </div>
+
+            </div>
         </div>
-    )
+    );
 }

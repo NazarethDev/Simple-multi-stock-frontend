@@ -1,32 +1,32 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { Collapse } from "bootstrap"
+import { useEffect, useState } from "react";
 
 
 export default function HeaderComponent() {
 
+    const [isOpen, setIsOpen] = useState(false)
     const location = useLocation();
 
     useEffect(() => {
-        const navbar = document.getElementById("navbarNav");
-
-        if (navbar && navbar.classList.contains("show")) {
-            const bsCollapse = new Collapse(navbar, {
-                toggle: false,
-            });
-            bsCollapse.hide();
-        }
+        setIsOpen(false)
     }, [location.pathname]);
 
     return (
 
-        <nav className="navbar navbar-expand-lg fixed-top">
+        <nav className="navbar navbar-expand-lg w-100">
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/">Multi Stock</NavLink>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-label="Toggle navigation"
+                    onClick={() => setIsOpen(prev => !prev)}>
+
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
+
+                <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <NavLink to="/" end className={({ isActive }) =>
@@ -44,23 +44,15 @@ export default function HeaderComponent() {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink
-                                to="/lista-de-produtos"
-                                className={({ isActive }) =>
-                                    isActive ? "nav-link active" : "nav-link"
-                                }
-                            >
-                                Lista de produtos
-                            </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink
-                                to="/expira-breve"
+                                to="/lista-de-validades"
                                 className={({ isActive }) =>
                                     isActive ? "nav-link active" : "nav-link"
                                 }
                             >
-                                Expiram em breve
+                                Lista de validades
                             </NavLink>
                         </li>
                         <li className="nav-item">
