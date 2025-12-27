@@ -60,6 +60,13 @@ export default function ProductListCardComponent({ product, onClick }) {
                         <strong>Total:</strong>
                         <strong>{product.totalQuantity}</strong>
                     </div>
+                    <div className="mt-1 d-flex justify-content-between">
+                        <strong>Custo total:</strong>
+                        <strong>  {Number(product.totalCost).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                        })}</strong>
+                    </div>
 
                 </div>
             </div>

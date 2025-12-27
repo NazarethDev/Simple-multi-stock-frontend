@@ -1,13 +1,16 @@
 import { useState } from "react";
 import getEanCode from "../../services/eanCodeScan.js";
 import { createNewProduct } from "../../services/multiStockApi.js"
+import ProductCardComponentEdit from "../../components/ProductCardComponentEdit/index.jsx";
 
 export default function NewProductPage() {
   const [barCode, setBarCode] = useState("");
   const [date, setDate] = useState("");
   const [name, setName] = useState("");
+  const [cost, setCost] = useState("");
   const [product, setProduct] = useState(null);
   const [message, setMessage] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false);
 
   async function handleReadBarcode() {
     try {
@@ -22,15 +25,24 @@ export default function NewProductPage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const parsedCost = Number(cost);
+
+    if (cost === "" || Number.isNaN(parsedCost)) {
+      setMessage("Custo inválido");
+      return
+    }
+
     try {
       const response = await createNewProduct({
         name: name,
         eanCode: barCode,
-        expiresAt: date
+        expiresAt: date,
+        cost: parsedCost,
       });
 
       if (response.status === 201) {
         setProduct(response.data);
+        setShowEditModal(true)
         setMessage("Product created successfully!");
 
       }
@@ -45,6 +57,17 @@ export default function NewProductPage() {
 
     }
 
+  }
+
+  function handleCloseEditModal() {
+    setShowEditModal(false);
+    setProduct(null);
+
+    setBarCode("");
+    setDate("");
+    setName("");
+    setCost("");
+    setMessage("");
   }
 
   return (
@@ -81,13 +104,29 @@ export default function NewProductPage() {
         />
 
         <div className="row g-2">
-          <div className="col-12 col-md-8">
+          <div className="col-6 col-md-8">
             <input
               type="date"
               className="form-control"
               value={date}
               min={new Date().toISOString().split("T")[0]}
               onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="col-6 col-md-8">
+            <input
+              type="text"
+              inputMode="decimal"
+              className="form-control"
+              value={cost}
+              min={0}
+              placeholder="Digite o custo do produto"
+              onChange={(e) => {
+                const value = e.target.value.replace(",", ".");
+                if (/^\d*\.?\d*$/.test(value)) {
+                  setCost(value);
+                }
+              }}
             />
           </div>
 
@@ -114,6 +153,12 @@ export default function NewProductPage() {
           </div>
         </div>
       </form>
+      {showEditModal && product && (
+        <ProductCardComponentEdit
+          product={product}
+          onClose={handleCloseEditModal}
+        />
+      )}
     </div>
   );
 }

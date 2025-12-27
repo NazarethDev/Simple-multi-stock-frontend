@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { updateProduct } from "../../services/multiStockApi.js";
+import { getExpirationStyle } from "../../utils/expirationStyle.js"
+
 
 export default function ProductCardComponentEdit({ product, onClose }) {
+    const expirationStyle = getExpirationStyle(product.expiresAt);
 
     const [quantities, setQuantities] = useState({ ...product.quantity });
 
@@ -49,16 +52,30 @@ export default function ProductCardComponentEdit({ product, onClose }) {
                     <div className="modal-content">
 
                         <div className="modal-header">
-                            <h5 className="modal-title">{product.name}</h5>
+                            <h5 className={`modal-title ${expirationStyle.text}`}>{product.name}</h5>
                             <button className="btn-close" onClick={onClose} />
                         </div>
 
                         <div className="modal-body">
-                            <p><strong>EAN:</strong> {product.eanCode}</p>
-                            <p>
-                                <strong>Validade:</strong>{" "}
-                                {new Date(product.expiresAt).toLocaleDateString()}
-                            </p>
+                            <div className="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                <div className={`col-6 ${expirationStyle.text}`}>
+                                    <strong>Cód. barras:</strong> {product.eanCode}
+                                </div>
+                                <div className={`col-6 ${expirationStyle.text}`}>
+                                    <strong>Custo do produto:</strong>   {Number(product.cost).toLocaleString("pt-BR", {
+                                        style: "currency",
+                                        currency: "BRL",
+                                    })}
+                                </div>
+
+                            </div>
+                            <div className="d-flex justify-content gap-2">
+                                <div className="col-12">
+                                    <strong className={`${expirationStyle.text}`}>Validade: </strong>
+                                    <p className={`${expirationStyle.text}`}>{new Date(product.expiresAt).toLocaleDateString()}</p>
+
+                                </div>
+                            </div>
 
                             <hr />
                             <h6>Quantidade por loja</h6>
@@ -83,6 +100,28 @@ export default function ProductCardComponentEdit({ product, onClose }) {
 
                                     </li>
                                 ))}
+                            </ul>
+                            <hr />
+                            <ul className="list-unstyled">
+                                <li className="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                    <div className={`col-6 ${expirationStyle.text}`}>
+                                        <strong>Quantidade total: </strong>
+                                    </div>
+                                    <div className={`col-6 ${expirationStyle.text}`}>
+                                        {product.totalQuantity}
+                                    </div>
+                                </li>
+                                <li className="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                    <div className={`col-6 ${expirationStyle.text}`}>
+                                        <strong>Custo total: </strong>
+                                    </div>
+                                    <div className={`col-6 ${expirationStyle.text}`}>
+                                        {Number(product.totalCost).toLocaleString("pt-BR", {
+                                            style: "currency",
+                                            currency: "BRL",
+                                        })}
+                                    </div>
+                                </li>
                             </ul>
                         </div>
 
