@@ -4,7 +4,7 @@ import { getExpiringSoonProducts } from "../../services/multiStockApi.js";
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit/index.jsx";
 import PaginationComponent from "../../components/PaginationComponent/index.jsx";
 import DaysFilterComponent from "../../components/FilterDayComponent/index.jsx";
-import ProductListCardComponent from "../../components/ProductsListCard/index.jsx";
+import ProductListCardComponent from "../../components/ProductsListCardComponent/index.jsx";
 
 export default function ProductExpirationDatesPage() {
 

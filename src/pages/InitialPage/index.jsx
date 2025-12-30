@@ -34,6 +34,15 @@ export default function InitialPage() {
 
                 <div className="col-12 col-md-6">
                     <Link
+                        to="/atualizar-dados-base"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Atualizar dados base de produtos
+                    </Link>
+                </div>
+
+                <div className="col-12 col-md-6">
+                    <Link
                         to="/estatisticas"
                         className="btn btn-outline-light w-100 py-3"
                     >

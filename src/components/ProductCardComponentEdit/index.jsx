@@ -42,7 +42,12 @@ export default function ProductCardComponentEdit({ product, onClose }) {
             document.body.classList.remove("modal-open");
             document.body.style.overflow = "";
         }
-    })
+    });
+
+    const totalQuantity = Object.values(quantities)
+        .reduce((sum, value) => sum + value, 0);
+
+    const totalCost = totalQuantity * product.cost;
 
     return (
         <>
@@ -108,7 +113,7 @@ export default function ProductCardComponentEdit({ product, onClose }) {
                                         <strong>Quantidade total: </strong>
                                     </div>
                                     <div className={`col-6 ${expirationStyle.text}`}>
-                                        {product.totalQuantity}
+                                        {totalQuantity}
                                     </div>
                                 </li>
                                 <li className="d-flex align-items-center justify-content-between gap-2 mb-2">
@@ -116,9 +121,9 @@ export default function ProductCardComponentEdit({ product, onClose }) {
                                         <strong>Custo total: </strong>
                                     </div>
                                     <div className={`col-6 ${expirationStyle.text}`}>
-                                        {Number(product.totalCost).toLocaleString("pt-BR", {
+                                        {totalCost.toLocaleString("pt-BR", {
                                             style: "currency",
-                                            currency: "BRL",
+                                            currency: "BRL"
                                         })}
                                     </div>
                                 </li>

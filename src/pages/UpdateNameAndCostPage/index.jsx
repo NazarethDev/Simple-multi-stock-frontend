@@ -1,10 +1,10 @@
 import { useState } from "react";
-import ProductCardComponentEdit from "../../components/ProductCardComponentEdit";
+import UpdateNameAndCostCardComponent from "../../components/EditNameAndCostProductComponent/index.jsx";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
 import BarcodeSearch from "../../components/BarcodeSearch/index.jsx";
 import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
 
-export default function FindProductByBarCode() {
+export default function UpdateNameAndCostPage() {
     const {
         eanCode,
         setEanCode,
@@ -36,7 +36,6 @@ export default function FindProductByBarCode() {
                 showCamera={showCamera}
             />
 
-            {/* LISTA */}
             {!selectedProduct && products.length > 0 && (
                 <div className="mt-4">
                     <h6 className="mb-3">Produtos encontrados</h6>
@@ -55,10 +54,9 @@ export default function FindProductByBarCode() {
                 </div>
             )}
 
-            {/* EDIÇÃO */}
             {selectedProduct && (
                 <div className="mt-4">
-                    <ProductCardComponentEdit
+                    <UpdateNameAndCostCardComponent
                         product={selectedProduct}
                         onClose={async () => {
                             setSelectedProduct(null);

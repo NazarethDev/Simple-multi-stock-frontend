@@ -67,6 +67,16 @@ export default function HeaderComponent() {
                         </li>
                         <li className="nav-item">
                             <NavLink
+                                to="/atualizar-dados-base"
+                                className={({ isActive }) =>
+                                    isActive ? "nav-link active" : "nav-link"
+                                }
+                            >
+                                Atualizar dados base de produtos
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink
                                 to="/estatisticas"
                                 className={({ isActive }) =>
                                     isActive ? "nav-link active" : "nav-link"

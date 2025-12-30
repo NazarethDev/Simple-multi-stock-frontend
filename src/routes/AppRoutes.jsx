@@ -5,6 +5,7 @@ import InitialPage from "../pages/InitialPage/index.jsx";
 import NewProductsPage from "../pages/NewProductsPage/index.jsx";
 import StatisticsPage from "../pages/StatisticsPage/index.jsx";
 import FindProductByBarCode from "../pages/FindProductByBarCodePage/index.jsx";
+import UpdateNameAndCostPage from "../pages/UpdateNameAndCostPage/index.jsx"
 
 export default function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ export default function AppRoutes() {
             <Route path="/novo-produto" element={<NewProductsPage />} />
             <Route path="/estatisticas" element={<StatisticsPage />} />
             <Route path="/procurar-por-codigo" element={<FindProductByBarCode />} />
+            <Route path="/atualizar-dados-base" element={<UpdateNameAndCostPage />} />
         </Routes>
     )
 }
