@@ -21,6 +21,11 @@ export default function UpdateNameAndCostPage() {
         setSelectedProduct(product);
     }
 
+    async function handleUpdated() {
+        setSelectedProduct(null);
+        await handleSearch(); 
+    }
+
     return (
         <div className="container mt-4">
             <BarcodeSearch
@@ -45,9 +50,7 @@ export default function UpdateNameAndCostPage() {
                             <ProductListCardComponent
                                 key={product._id}
                                 product={product}
-                                onClick={() =>
-                                    handleSelectProduct(product)
-                                }
+                                onClick={() => handleSelectProduct(product)}
                             />
                         ))}
                     </div>
@@ -58,10 +61,8 @@ export default function UpdateNameAndCostPage() {
                 <div className="mt-4">
                     <UpdateNameAndCostCardComponent
                         product={selectedProduct}
-                        onClose={async () => {
-                            setSelectedProduct(null);
-                            await handleSearch();
-                        }}
+                        onClose={() => setSelectedProduct(null)}
+                        onUpdated={handleUpdated}
                     />
                 </div>
             )}

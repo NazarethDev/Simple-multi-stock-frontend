@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { updateNameAndCost } from "../../services/multiStockApi.js";
 import { getExpirationStyle } from "../../utils/expirationStyle.js";
 
-export default function UpdateNameAndCostCardComponent({ product, onClose }) {
+export default function UpdateNameAndCostCardComponent({ product, onClose, onUpdated }) {
     const expirationStyle = getExpirationStyle(product.expiresAt);
 
     const [name, setName] = useState(product.name);
@@ -20,9 +20,16 @@ export default function UpdateNameAndCostCardComponent({ product, onClose }) {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        const parsedCost = Number(cost);
+
+        if (cost === "" || Number.isNaN(parsedCost)) {
+            setMessage("Custo inválido");
+            return
+        }
+
         const payload = {
-            productName,
-            productCost,
+            productName: name,
+            productCost: parsedCost,
             expiresAt: expiresAt
                 ? new Date(expiresAt).toISOString() : null,
         }
@@ -32,7 +39,8 @@ export default function UpdateNameAndCostCardComponent({ product, onClose }) {
 
             await updateNameAndCost(product._id, payload);
 
-            onClose();
+            await onUpdated();
+
         } catch (error) {
             alert("Erro ao atualizar produto");
             console.error(error);
@@ -74,13 +82,18 @@ export default function UpdateNameAndCostCardComponent({ product, onClose }) {
                             <div className="mb-3">
                                 <label className="form-label">Custo unitário</label>
                                 <input
-                                    type="number"
+                                    type="text"
+                                    inputMode="decimal"
                                     className="form-control"
                                     min={0}
                                     step="0.01"
                                     value={cost}
-                                    onChange={(e) => setCost(e.target.value)}
-                                    required
+                                    onChange={(e) => {
+                                        const value = e.target.value.replace(",", ".");
+                                        if (/^\d*\.?\d*$/.test(value)) {
+                                            setCost(value);
+                                        }
+                                    }}
                                 />
                             </div>
 

@@ -3,7 +3,7 @@ import axios from "axios";
 const PRODUCTS_API_BASE_URL = import.meta.env.VITE_PRODUCTS_API_BASE_URL;
 const UPDATE_PRODUCT_API_URL_COMPLEMENT = "/quantity";
 const FIND_PRODUCT_BY_EANCODE_API_URL_COMPLEMENT = "/ean/";
-const UPDATE_PRODUCT_NAME_AND_COST  = "update-cost-and-name"
+const UPDATE_PRODUCT_NAME_AND_COST = "update-cost-and-name/"
 
 export async function getExpiringSoonProducts({ days, page, limit }) {
     return axios.get(PRODUCTS_API_BASE_URL + "/expiring-soon", {
@@ -28,6 +28,6 @@ export async function findByBarCode(eanCode) {
     return axios.get(PRODUCTS_API_BASE_URL + FIND_PRODUCT_BY_EANCODE_API_URL_COMPLEMENT + eanCode)
 };
 
-export async function updateNameAndCost(productId, data){
-    return axios.patch(PRODUCTS_API_BASE_URL + UPDATE_PRODUCT_NAME_AND_COST + "/" + productId, data)
+export async function updateNameAndCost(productId, data) {
+    return axios.patch(PRODUCTS_API_BASE_URL + "/" + UPDATE_PRODUCT_NAME_AND_COST + productId, data)
 }
