@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { useBarCodeScanner } from "../../services/useBarCodeScanner";
+
 export default function BarcodeSearch({
     eanCode,
     onChange,
@@ -6,54 +9,60 @@ export default function BarcodeSearch({
     loading,
     showCamera,
 }) {
+    const videoRef = useRef(null);
+
+    useBarCodeScanner({
+        videoRef,
+        enabled: showCamera,
+        onDetected: (code) => {
+            onChange(code);
+        }
+    });
+
     return (
-        <>
-            {/* INPUT */}
-            <div className="row g-2">
-                <div className="col-12">
-                    <label className="form-label">Código de barras</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Digite ou leia o código"
-                        value={eanCode}
-                        onChange={(e) => onChange(e.target.value)}
-                    />
-                </div>
-
-                <div className="col-12 d-flex gap-2">
-                    <button
-                        className="btn btn-primary flex-fill"
-                        onClick={onSearch}
-                        disabled={loading}
-                    >
-                        {loading ? "Buscando..." : "Buscar"}
-                    </button>
-
-                    <button
-                        className="btn btn-secondary flex-fill"
-                        onClick={onReadBarcode}
-                    >
-                        Ler código
-                    </button>
-                </div>
+        <div className="row g-2">
+            <div className="col-12">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Digite ou leia o código de barras"
+                    value={eanCode}
+                    onChange={(e) => onChange(e.target.value)}
+                />
             </div>
 
-            {/* CÂMERA */}
+            <div className="col-12 d-flex gap-2">
+                <button
+                    className="btn btn-secondary"
+                    onClick={onReadBarcode}
+                    disabled={loading}
+                >
+                    Ler código
+                </button>
+            </div>
+
+            <div className="col-12 d-flex gap-2">
+                <button
+                    className="btn btn-primary"
+                    onClick={onSearch}
+                    disabled={loading}
+                >
+                    Buscar
+                </button>
+            </div>
+
+
             {showCamera && (
                 <div className="mt-3">
                     <video
-                        id="video"
-                        className="w-100 rounded border"
-                        style={{ maxHeight: "300px", objectFit: "cover" }}
+                        ref={videoRef}
                         autoPlay
+                        playsInline
                         muted
+                        style={{ width: "100%" }}
                     />
-                    <small className="text-muted d-block mt-1">
-                        Aponte a câmera para o código de barras
-                    </small>
                 </div>
             )}
-        </>
+        </div>
     );
 }

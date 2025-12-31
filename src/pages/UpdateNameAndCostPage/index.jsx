@@ -1,8 +1,8 @@
 import { useState } from "react";
 import UpdateNameAndCostCardComponent from "../../components/EditNameAndCostProductComponent/index.jsx";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
-import BarcodeSearch from "../../components/BarCodeSearch/index.jsx";
-import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
+import BarCodeSearch from "../../components/BarCodeSearch/index.jsx";
+import { useBarCodeSearchService } from "../../services/useBarCodeSearchService";
 
 export default function UpdateNameAndCostPage() {
     const {
@@ -13,7 +13,7 @@ export default function UpdateNameAndCostPage() {
         showCamera,
         handleReadBarcode,
         handleSearch,
-    } = useBarcodeSearch();
+    } = useBarCodeSearchService();
 
     const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -23,12 +23,12 @@ export default function UpdateNameAndCostPage() {
 
     async function handleUpdated() {
         setSelectedProduct(null);
-        await handleSearch(); 
+        await handleSearch();
     }
 
     return (
         <div className="container mt-4">
-            <BarcodeSearch
+            <BarCodeSearch
                 eanCode={eanCode}
                 onChange={setEanCode}
                 onSearch={() =>
