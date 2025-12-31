@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useBarCodeScanner } from "../../services/useBarCodeScanner";
+import { playBeep } from "../../utils/playBeep";
 
 export default function BarcodeSearch({
     eanCode,
@@ -10,15 +11,23 @@ export default function BarcodeSearch({
     showCamera,
 }) {
     const videoRef = useRef(null);
-
-    // O hook agora só agirá quando showCamera for true e o videoRef estiver preenchido
     useBarCodeScanner({
         videoRef,
         enabled: showCamera,
         onDetected: (code) => {
+            if (!isScanning.current) return;
+
+            isScanning.current = false;
+
+            playBeep();
+
             onChange(code);
-            // Opcional: fechar a câmera automaticamente após ler?
-            // onReadBarcode(); 
+
+            onReadBarcode();
+
+            setTimeout(() => {
+                isScanning.current = true;
+            }, 1000);
         }
     });
 
