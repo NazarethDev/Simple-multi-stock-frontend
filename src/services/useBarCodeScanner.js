@@ -1,31 +1,46 @@
 import { useEffect, useRef } from "react";
-import getEanCode from "./eanCodeScan";
+import { BrowserMultiFormatReader } from "@zxing/browser";
 
-export function useBarCodeScanner({
-    videoRef,
-    enabled,
-    onDetected,
-}) {
-    const scannerStarted = useRef(false);
+const codeReader = new BrowserMultiFormatReader();
+
+export function useBarCodeScanner({ videoRef, enabled, onDetected }) {
+    const controlsRef = useRef(null);
 
     useEffect(() => {
-        if (!enabled) return;
-        if (!videoRef.current) return;
-        if (scannerStarted.current) return;
+        // Só inicia se estiver habilitado e o elemento de vídeo existir
+        if (!enabled || !videoRef.current) return;
 
-        scannerStarted.current = true;
+        let isMounted = true;
 
-        getEanCode(videoRef.current)
-            .then(code => onDetected(code))
-            .catch(console.error);
+        const startScanning = async () => {
+            try {
+                // Tenta forçar a câmera traseira (environment)
+                const constraints = { video: { facingMode: "environment" } };
+
+                const controls = await codeReader.decodeFromVideoDevice(
+                    undefined, // undefined usa a câmera padrão, ou você pode listar dispositivos
+                    videoRef.current,
+                    (result, error) => {
+                        if (result && isMounted) {
+                            onDetected(result.getText());
+                        }
+                    },
+                    constraints
+                );
+
+                controlsRef.current = controls;
+            } catch (err) {
+                console.error("Falha ao acessar a câmera:", err);
+            }
+        };
+
+        startScanning();
 
         return () => {
-            scannerStarted.current = false;
-
-            if (videoRef.current?.srcObject) {
-                videoRef.current.srcObject
-                    .getTracks()
-                    .forEach(track => track.stop());
+            isMounted = false;
+            if (controlsRef.current) {
+                controlsRef.current.stop();
+                controlsRef.current = null;
             }
         };
     }, [enabled, videoRef, onDetected]);

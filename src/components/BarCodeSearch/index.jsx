@@ -11,56 +11,78 @@ export default function BarcodeSearch({
 }) {
     const videoRef = useRef(null);
 
+    // O hook agora só agirá quando showCamera for true e o videoRef estiver preenchido
     useBarCodeScanner({
         videoRef,
         enabled: showCamera,
         onDetected: (code) => {
             onChange(code);
+            // Opcional: fechar a câmera automaticamente após ler?
+            // onReadBarcode(); 
         }
     });
 
     return (
         <div className="row g-2">
             <div className="col-12">
+                <label className="form-label text-muted small">Código EAN</label>
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control form-control-lg"
                     placeholder="Digite ou leia o código de barras"
                     value={eanCode}
                     onChange={(e) => onChange(e.target.value)}
                 />
             </div>
 
-            <div className="col-12 d-flex gap-2">
+            <div className="col-12 d-grid gap-2 d-md-flex">
                 <button
-                    className="btn btn-secondary"
+                    className={`btn ${showCamera ? 'btn-danger' : 'btn-secondary'} flex-grow-1`}
                     onClick={onReadBarcode}
                     disabled={loading}
                 >
-                    Ler código
+                    <i className={`bi ${showCamera ? 'bi-camera-video-off' : 'bi-camera-video'} me-2`}></i>
+                    {showCamera ? "Fechar Câmera" : "Ler código"}
                 </button>
-            </div>
 
-            <div className="col-12 d-flex gap-2">
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary flex-grow-1"
                     onClick={onSearch}
-                    disabled={loading}
+                    disabled={loading || !eanCode}
                 >
+                    {loading ? (
+                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                    ) : (
+                        <i className="bi bi-search me-2"></i>
+                    )}
                     Buscar
                 </button>
             </div>
 
-
             {showCamera && (
-                <div className="mt-3">
-                    <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        muted
-                        style={{ width: "100%" }}
-                    />
+                <div className="col-12 mt-3 animate__animated animate__fadeIn">
+                    <div className="position-relative bg-dark rounded overflow-hidden shadow-sm"
+                        style={{ height: "300px" }}>
+
+                        <video
+                            ref={videoRef}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover", // Garante que preencha o espaço sem distorcer
+                            }}
+                            muted
+                            playsInline
+                        />
+
+                        {/* Overlay visual para ajudar o usuário a centralizar */}
+                        <div className="position-absolute top-50 start-50 translate-middle border border-2 border-primary"
+                            style={{ width: "80%", height: "40%", borderRadius: "8px", pointerEvents: "none", opacity: 0.5 }}>
+                        </div>
+                        <div className="position-absolute bottom-0 start-50 translate-middle-x bg-dark bg-opacity-75 text-white px-3 py-1 mb-2 rounded-pill small">
+                            Aponte para o código de barras
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

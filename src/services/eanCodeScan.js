@@ -1,24 +1,27 @@
 import { BrowserMultiFormatReader } from "@zxing/browser";
 
-export default async function getEanCode(videoElement) {
-  const codeReader = new BrowserMultiFormatReader();
+const codeReader = new BrowserMultiFormatReader();
 
-  return new Promise((resolve, reject) => {
-    codeReader.decodeFromConstraints(
-      { video: { facingMode: "environment" } },
-      videoElement,
-      (result, err) => {
-        if (result) {
-          codeReader.reset();
-          resolve(result.getText());
-        }
+export async function startScanner(videoElement, onResult) {
+  // 1. Obtém a câmera traseira (se houver)
+  const videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
+  const selectedDeviceId = videoInputDevices[0].deviceId;
 
-        if (err && err.name !== "NotFoundException") {
-          codeReader.reset();
-          reject(err);
-        }
+  // 2. Inicia a decodificação contínua
+  // O retorno aqui é uma função para parar o scanner
+  const controls = await codeReader.decodeFromVideoDevice(
+    selectedDeviceId,
+    videoElement,
+    (result, error) => {
+      if (result) {
+        onResult(result.getText());
       }
-    );
-  });
+      // Ignoramos NotFoundException para continuar tentando
+    }
+  );
+
+  return controls;
+
 }
 
+export default startScanner
