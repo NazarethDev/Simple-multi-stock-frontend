@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UpdateNameAndCostCardComponent from "../../components/EditNameAndCostProductComponent/index.jsx";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
-import BarcodeSearch from "../../components/BarcodeSearch/index.jsx";
+import BarcodeSearch from "../../components/BarCodeSearch/index.jsx";
 import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
 
 export default function UpdateNameAndCostPage() {
