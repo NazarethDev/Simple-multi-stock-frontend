@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
-import BarcodeSearch from "../../components/BarcodeSearch/index.jsx";
+import BarcodeSearch from "../../components/BarCodeSearch/index.jsx";
 import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
 
 export default function FindProductByBarCode() {
