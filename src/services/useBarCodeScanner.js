@@ -13,7 +13,6 @@ export function useBarCodeScanner({ videoRef, enabled, onDetected }) {
         let isMounted = true;
 
         const startScanning = async () => {
-            // Delay para garantir que o elemento de vídeo existe no DOM
             await new Promise(resolve => setTimeout(resolve, 200));
 
             if (!enabled || !isMounted || !videoRef.current) return;

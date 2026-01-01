@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
 import BarCodeSearch from "../../components/BarCodeSearch/index.jsx";
-import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
+import { useBarCodeSearchService } from "../../services/useBarCodeSearchService";
 
 export default function FindProductByBarCode() {
     const {
@@ -13,7 +13,7 @@ export default function FindProductByBarCode() {
         showCamera,
         handleReadBarcode,
         handleSearch,
-    } = useBarcodeSearch();
+    } = useBarCodeSearchService();
 
     const [selectedProduct, setSelectedProduct] = useState(null);
 
