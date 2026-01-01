@@ -5,36 +5,52 @@ const codeReader = new BrowserMultiFormatReader();
 
 export function useBarCodeScanner({ videoRef, enabled, onDetected }) {
     const controlsRef = useRef(null);
+    // Usamos uma Ref para o callback para evitar reiniciar o scanner quando ele muda
+    const onDetectedRef = useRef(onDetected);
+    onDetectedRef.current = onDetected;
 
     useEffect(() => {
-        // Só inicia se estiver habilitado e o elemento de vídeo existir
-        if (!enabled || !videoRef.current) return;
-
         let isMounted = true;
 
         const startScanning = async () => {
+            // Delay para garantir que o elemento de vídeo existe no DOM
+            await new Promise(resolve => setTimeout(resolve, 200));
+
+            if (!enabled || !isMounted || !videoRef.current) return;
+
             try {
-                // Tenta forçar a câmera traseira (environment)
-                const constraints = { video: { facingMode: "environment" } };
+                const constraints = {
+                    video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } }
+                };
 
                 const controls = await codeReader.decodeFromVideoDevice(
-                    undefined, // undefined usa a câmera padrão, ou você pode listar dispositivos
+                    undefined,
                     videoRef.current,
                     (result, error) => {
-                        if (result && isMounted) {
-                            onDetected(result.getText());
+                        // Verificamos se há um resultado e se ele tem o método getText
+                        if (result && isMounted && typeof result.getText === 'function') {
+                            const text = result.getText();
+                            if (text && text !== "[object Object]") {
+                                onDetectedRef.current(text);
+                            }
                         }
                     },
                     constraints
                 );
 
-                controlsRef.current = controls;
+                if (!isMounted) {
+                    controls.stop();
+                } else {
+                    controlsRef.current = controls;
+                }
             } catch (err) {
-                console.error("Falha ao acessar a câmera:", err);
+                if (err.name !== "AbortError") console.warn("Erro no Scanner:", err);
             }
         };
 
-        startScanning();
+        if (enabled) {
+            startScanning();
+        }
 
         return () => {
             isMounted = false;
@@ -42,6 +58,9 @@ export function useBarCodeScanner({ videoRef, enabled, onDetected }) {
                 controlsRef.current.stop();
                 controlsRef.current = null;
             }
+            if (videoRef.current) {
+                videoRef.current.srcObject = null;
+            }
         };
-    }, [enabled, videoRef, onDetected]);
+    }, [enabled, videoRef]); // onDetected removido das dependências
 }

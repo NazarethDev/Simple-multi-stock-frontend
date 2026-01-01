@@ -11,6 +11,10 @@ export function useBarCodeSearchService() {
         setShowCamera(prev => !prev);
     }
 
+    function stopCamera(){
+        setShowCamera(false)
+    }
+
     async function handleSearch() {
         setLoading(true);
         try {
@@ -34,5 +38,6 @@ export function useBarCodeSearchService() {
         showCamera,
         handleReadBarcode,
         handleSearch,
+        stopCamera
     };
 }

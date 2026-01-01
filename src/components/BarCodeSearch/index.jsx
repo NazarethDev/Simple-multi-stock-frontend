@@ -11,6 +11,8 @@ export default function BarcodeSearch({
     showCamera,
 }) {
     const videoRef = useRef(null);
+    const isScanning = useRef(true);
+
     useBarCodeScanner({
         videoRef,
         enabled: showCamera,
@@ -18,9 +20,7 @@ export default function BarcodeSearch({
             if (!isScanning.current) return;
 
             isScanning.current = false;
-
             playBeep();
-
             onChange(code);
 
             onReadBarcode();
@@ -46,8 +46,13 @@ export default function BarcodeSearch({
 
             <div className="col-12 d-grid gap-2 d-md-flex">
                 <button
+                    type="button"
                     className={`btn ${showCamera ? 'btn-danger' : 'btn-secondary'} flex-grow-1`}
-                    onClick={onReadBarcode}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        console.log("Botão clicado! Estado atual de showCamera:", showCamera);
+                        onReadBarcode();
+                    }}
                     disabled={loading}
                 >
                     <i className={`bi ${showCamera ? 'bi-camera-video-off' : 'bi-camera-video'} me-2`}></i>
@@ -74,17 +79,18 @@ export default function BarcodeSearch({
                         style={{ height: "300px" }}>
 
                         <video
+                            id="video"
                             ref={videoRef}
                             style={{
                                 width: "100%",
                                 height: "100%",
-                                objectFit: "cover", // Garante que preencha o espaço sem distorcer
+                                objectFit: "cover"
                             }}
                             muted
                             playsInline
                         />
 
-                        {/* Overlay visual para ajudar o usuário a centralizar */}
+                        {/* Overlay visual */}
                         <div className="position-absolute top-50 start-50 translate-middle border border-2 border-primary"
                             style={{ width: "80%", height: "40%", borderRadius: "8px", pointerEvents: "none", opacity: 0.5 }}>
                         </div>

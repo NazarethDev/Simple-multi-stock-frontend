@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit";
 import ProductListCardComponent from "../../components/ProductsListCardComponent";
-import BarcodeSearch from "../../components/BarCodeSearch/index.jsx";
+import BarCodeSearch from "../../components/BarCodeSearch/index.jsx";
 import { useBarcodeSearch } from "../../utils/useBarCodeSearch.js";
 
 export default function FindProductByBarCode() {
@@ -23,7 +23,7 @@ export default function FindProductByBarCode() {
 
     return (
         <div className="container mt-4">
-            <BarcodeSearch
+            <BarCodeSearch
                 eanCode={eanCode}
                 onChange={setEanCode}
                 onSearch={() =>
