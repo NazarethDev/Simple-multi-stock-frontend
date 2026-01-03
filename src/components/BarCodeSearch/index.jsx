@@ -9,6 +9,7 @@ export default function BarcodeSearch({
     onReadBarcode,
     loading,
     showCamera,
+    isSearchDisabled = false
 }) {
     const videoRef = useRef(null);
     const isScanning = useRef(true);
@@ -59,7 +60,7 @@ export default function BarcodeSearch({
                     {showCamera ? "Fechar Câmera" : "Ler código"}
                 </button>
 
-                <button
+                { onSearch && typeof onSearch === 'function' && !isSearchDisabled && ( <button
                     className="btn btn-primary flex-grow-1"
                     onClick={onSearch}
                     disabled={loading || !eanCode}
@@ -70,7 +71,7 @@ export default function BarcodeSearch({
                         <i className="bi bi-search me-2"></i>
                     )}
                     Buscar
-                </button>
+                </button>)}
             </div>
 
             {showCamera && (

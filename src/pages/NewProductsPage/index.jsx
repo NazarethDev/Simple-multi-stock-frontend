@@ -1,10 +1,10 @@
-import { useState } from "react";
-import getEanCode from "../../services/eanCodeScan.js";
+import { useState, useEffect } from "react"; // Adicionado useEffect
 import { createNewProduct } from "../../services/multiStockApi.js"
 import ProductCardComponentEdit from "../../components/ProductCardComponentEdit/index.jsx";
+import BarCodeSearch from "../../components/BarCodeSearch/index.jsx";
+import { useBarCodeSearchService } from "../../services/useBarCodeSearchService";
 
 export default function NewProductPage() {
-  const [barCode, setBarCode] = useState("");
   const [date, setDate] = useState("");
   const [name, setName] = useState("");
   const [cost, setCost] = useState("");
@@ -12,15 +12,14 @@ export default function NewProductPage() {
   const [message, setMessage] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
 
-  async function handleReadBarcode() {
-    try {
-      const ean = await getEanCode("video");
-      setBarCode(ean);
-    } catch (error) {
-      console.error("Erro ao ler código de barras:", error);
-      alert("Não foi possível ler o código de barras");
-    }
-  }
+  // Importamos o service do scanner
+  const {
+    eanCode,
+    setEanCode,
+    loading,
+    showCamera,
+    handleReadBarcode,
+  } = useBarCodeSearchService();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,41 +28,45 @@ export default function NewProductPage() {
 
     if (cost === "" || Number.isNaN(parsedCost)) {
       setMessage("Custo inválido");
-      return
+      alert("Custo inválido");
+      return;
+    }
+
+    if (!eanCode) {
+      alert("Por favor, insira ou leia um código de barras");
+      return;
     }
 
     try {
       const response = await createNewProduct({
         name: name,
-        eanCode: barCode,
+        eanCode: eanCode,
         expiresAt: date,
         cost: parsedCost,
       });
 
       if (response.status === 201) {
         setProduct(response.data);
-        setShowEditModal(true)
-        setMessage("Product created successfully!");
-
+        setShowEditModal(true);
+        setMessage("Produto criado com sucesso!");
       }
 
     } catch (error) {
       if (error.response?.status === 409) {
         setProduct(error.response.data.product);
-        setMessage("Product already registered in the system.");
+        setMessage("Produto já cadastrado no sistema.");
+        setShowEditModal(true);
+      } else {
+        setMessage("Erro ao salvar produto");
       }
-
-      setMessage("Erro ao salvar produto")
-
     }
-
   }
 
   function handleCloseEditModal() {
     setShowEditModal(false);
     setProduct(null);
 
-    setBarCode("");
+    setEanCode("");
     setDate("");
     setName("");
     setCost("");
@@ -72,39 +75,26 @@ export default function NewProductPage() {
 
   return (
     <div className="container mt-4">
-      <form
-        onSubmit={handleSubmit}
-        className="d-flex flex-column gap-3"
-      >
-        <div className="row g-2">
-          <div className="col-12 col-md-8">
-            <input
-              type="text"
-              className="form-control"
-              value={barCode}
-              onChange={(e) => setBarCode(e.target.value)}
-              placeholder="Digite ou leia o código"
-            />
-          </div>
+      {message && <div className={`alert ${message.includes("Erro") ? 'alert-danger' : 'alert-info'}`}>{message}</div>}
 
-          <div className="col-12 col-md-4 d-grid">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleReadBarcode}
-            >
-              Ler código de barras
-            </button>
-          </div>
+      <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
+
+        {/* Componente de Scanner ajustado para Cadastro */}
+        <div className="row g-2">
+          <BarCodeSearch
+            eanCode={eanCode}
+            onChange={setEanCode}
+            isSearchDisabled={true}
+            onSearch={() => { }}
+            onReadBarcode={handleReadBarcode}
+            loading={loading}
+            showCamera={showCamera}
+          />
         </div>
 
-        <video
-          id="video"
-          className="w-100 rounded border"
-        />
-
         <div className="row g-2">
-          <div className="col-6 col-md-8">
+          <div className="col-6 col-md-4">
+            <label className="small text-muted">Data de Validade</label>
             <input
               type="date"
               className="form-control"
@@ -113,14 +103,14 @@ export default function NewProductPage() {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-          <div className="col-6 col-md-8">
+          <div className="col-6 col-md-4">
+            <label className="small text-muted">Custo (R$)</label>
             <input
               type="text"
               inputMode="decimal"
               className="form-control"
               value={cost}
-              min={0}
-              placeholder="Digite o custo do produto"
+              placeholder="0.00"
               onChange={(e) => {
                 const value = e.target.value.replace(",", ".");
                 if (/^\d*\.?\d*$/.test(value)) {
@@ -129,30 +119,33 @@ export default function NewProductPage() {
               }}
             />
           </div>
+        </div>
 
-          <div className="row g-2">
-            <div className="col-12 col-md-8">
-              <input
-                type="text"
-                className="form-control"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Digite o nome e peso do produto"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="col-12 col-md-4 d-grid">
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
-              Salvar produto
-            </button>
+        <div className="row g-2">
+          <div className="col-12">
+            <label className="small text-muted">Nome do Produto</label>
+            <input
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex: Arroz Tio João 5kg"
+              required
+            />
           </div>
         </div>
+
+        <div className="col-12 d-grid mt-2">
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg"
+            disabled={loading}
+          >
+            Salvar produto
+          </button>
+        </div>
       </form>
+
       {showEditModal && product && (
         <ProductCardComponentEdit
           product={product}
