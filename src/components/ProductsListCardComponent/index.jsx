@@ -1,7 +1,10 @@
 import { getExpirationStyle } from "../../utils/expirationStyle.js"
+import normalizeDate from "../../utils/normalizeISODate.js"
+
 
 export default function ProductListCardComponent({ product, onClick }) {
     const expirationStyle = getExpirationStyle(product.expiresAt);
+    const normalizedDate = normalizeDate(product.expiresAt);
 
     return (
         <div className="col-12">
@@ -12,7 +15,6 @@ export default function ProductListCardComponent({ product, onClick }) {
             >
                 <div className="card-body">
 
-                    {/* Título + data */}
                     <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
                         <strong
                             className={`mb-1 mb-sm-0 ${expirationStyle.text} text-truncate`}
@@ -23,13 +25,12 @@ export default function ProductListCardComponent({ product, onClick }) {
                         <strong
                             className={`small ${expirationStyle.text}`}
                         >
-                            {new Date(product.expiresAt).toLocaleDateString()}
+                            {normalizedDate}
                         </strong>
                     </div>
 
                     <hr className="my-2 my-md-3" />
 
-                    {/* Estoque */}
                     <div>
                         <small className="text-muted">
                             Estoque por loja

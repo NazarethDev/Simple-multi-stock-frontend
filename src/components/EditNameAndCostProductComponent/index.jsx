@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { updateNameAndCost } from "../../services/multiStockApi.js";
 import { getExpirationStyle } from "../../utils/expirationStyle.js";
+import normalizeDate from "../../utils/normalizeISODate.js";
+
 
 export default function UpdateNameAndCostCardComponent({ product, onClose, onUpdated }) {
     const expirationStyle = getExpirationStyle(product.expiresAt);
@@ -49,6 +51,8 @@ export default function UpdateNameAndCostCardComponent({ product, onClose, onUpd
         }
     }
 
+    const normalizedDate = normalizeDate(product.expiresAt);
+
     return (
         <>
             <div className="modal-backdrop fade show" onClick={onClose} />
@@ -57,7 +61,6 @@ export default function UpdateNameAndCostCardComponent({ product, onClose, onUpd
                 <div className="modal-dialog modal-dialog-centered">
                     <form className="modal-content" onSubmit={handleSubmit}>
 
-                        {/* HEADER */}
                         <div className="modal-header">
                             <h5 className={`modal-title ${expirationStyle.text}`}>
                                 Editar produto
@@ -65,7 +68,6 @@ export default function UpdateNameAndCostCardComponent({ product, onClose, onUpd
                             <button type="button" className="btn-close" onClick={onClose} />
                         </div>
 
-                        {/* BODY */}
                         <div className="modal-body">
 
                             <div className="mb-3">
@@ -110,7 +112,6 @@ export default function UpdateNameAndCostCardComponent({ product, onClose, onUpd
 
                         </div>
 
-                        {/* FOOTER */}
                         <div className="modal-footer">
                             <button
                                 type="button"

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { updateProduct } from "../../services/multiStockApi.js";
 import { getExpirationStyle } from "../../utils/expirationStyle.js"
+import normalizeDate from "../../utils/normalizeISODate.js"
 
 
 export default function ProductCardComponentEdit({ product, onClose }) {
     const expirationStyle = getExpirationStyle(product.expiresAt);
+    const normalizedDate = normalizeDate(product.expiresAt);
 
     const [quantities, setQuantities] = useState({ ...product.quantity });
 
@@ -77,7 +79,7 @@ export default function ProductCardComponentEdit({ product, onClose }) {
                             <div className="d-flex justify-content gap-2">
                                 <div className="col-12">
                                     <strong className={`${expirationStyle.text}`}>Validade: </strong>
-                                    <p className={`${expirationStyle.text}`}>{new Date(product.expiresAt).toLocaleDateString()}</p>
+                                    <p className={`${expirationStyle.text}`}>{normalizedDate}</p>
 
                                 </div>
                             </div>
