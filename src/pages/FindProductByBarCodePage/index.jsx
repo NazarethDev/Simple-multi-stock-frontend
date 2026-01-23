@@ -36,7 +36,6 @@ export default function FindProductByBarCode() {
                 showCamera={showCamera}
             />
 
-            {/* LISTA */}
             {!selectedProduct && products.length > 0 && (
                 <div className="mt-4">
                     <h6 className="mb-3">Produtos encontrados</h6>
@@ -55,7 +54,6 @@ export default function FindProductByBarCode() {
                 </div>
             )}
 
-            {/* EDIÇÃO */}
             {selectedProduct && (
                 <div className="mt-4">
                     <ProductCardComponentEdit

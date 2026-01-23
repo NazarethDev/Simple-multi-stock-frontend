@@ -7,7 +7,7 @@ export default function ProductListCardComponent({ product, onClick }) {
     const normalizedDate = normalizeDate(product.expiresAt);
 
     return (
-        <div className="col-12">
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3">
             <div
                 className={`card shadow-sm h-100 border-2 ${expirationStyle.border} cursor-pointer w-100`}
                 role="button"

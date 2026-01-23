@@ -12,7 +12,6 @@ export default function NewProductPage() {
   const [message, setMessage] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
 
-  // Importamos o service do scanner
   const {
     eanCode,
     setEanCode,
@@ -24,7 +23,7 @@ export default function NewProductPage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const parsedCost = Number(cost);
+    const parsedCost = cost === "" ? 0 : Number(cost);
 
     if (cost === "" || Number.isNaN(parsedCost)) {
       setMessage("Custo inválido");
@@ -79,7 +78,6 @@ export default function NewProductPage() {
 
       <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
 
-        {/* Componente de Scanner ajustado para Cadastro */}
         <div className="row g-2">
           <BarCodeSearch
             eanCode={eanCode}

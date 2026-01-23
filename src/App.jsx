@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <HeaderComponent />
-      <main className="container-fluid pt-5 min-vh-100 overflow-x-hidden">
+      <main className="pt-5 min-vh-100 overflow-x-hidden">
         <AppRoutes />
       </main>
       <FooterComponent />
