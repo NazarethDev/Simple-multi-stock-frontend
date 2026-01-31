@@ -18,7 +18,7 @@ export default function ExpiredProductsListPage() {
         try {
             setLoading(true);
 
-            const response = await getExpiringSoonProducts({
+            const response = await getExpiredProducts({
                 days,
                 page,
                 limit: 20
