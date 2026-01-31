@@ -46,7 +46,6 @@ export default function ExpiredProductsListPage() {
 
             <div className="row g-3 mt-2">
                 {loading ? (
-                    // Estado de Carregamento
                     <div className="col-12 text-center py-5">
                         <div className="spinner-border text-danger" role="status">
                             <span className="visually-hidden">Carregando...</span>
