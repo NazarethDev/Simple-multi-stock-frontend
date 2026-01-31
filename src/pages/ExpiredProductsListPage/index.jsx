@@ -24,8 +24,8 @@ export default function ExpiredProductsListPage() {
                 limit: 20
             });
 
-            setProducts(response.data.data);
-            setPagination(response.data.pagination);
+            setProducts(response?.data?.data || []);
+            setPagination(response?.data?.pagination || null);
         } catch (error) {
             console.error("Erro ao buscar produtos: ", error);
         } finally {
@@ -52,7 +52,7 @@ export default function ExpiredProductsListPage() {
                         </div>
                         <p className="mt-2 text-muted">Consultando histórico de vencimentos...</p>
                     </div>
-                ) : products.length > 0 ? (
+                ) : products?.length > 0 ? (
                     products.map(product => (
                         <ProductListCardComponent
                             key={product._id}
@@ -70,7 +70,7 @@ export default function ExpiredProductsListPage() {
 
             <PaginationComponent
                 currentPage={page}
-                totalPages={pagination?.totalPages}
+                totalPages={pagination?.totalPages || 0}
                 onPageChange={(newPage) => setPage(newPage)}
             />
             {selectedProduct && (
