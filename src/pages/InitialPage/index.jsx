@@ -43,6 +43,15 @@ export default function InitialPage() {
 
                 <div className="col-12 col-md-6">
                     <Link
+                        to="/produtos-vencidos"
+                        className="btn btn-outline-light w-100 py-3"
+                    >
+                        Produtos vencidos
+                    </Link>
+                </div>
+
+                <div className="col-12 col-md-6">
+                    <Link
                         to="/estatisticas"
                         className="btn btn-outline-light w-100 py-3"
                     >

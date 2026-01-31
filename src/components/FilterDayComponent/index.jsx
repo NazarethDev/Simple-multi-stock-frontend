@@ -19,9 +19,12 @@ export default function DaysFilterComponent({
                 <option value={3}>3 dias</option>
                 <option value={5}>5 dias</option>
                 <option value={7}>7 dias</option>
-                <option value={10}>10 dias</option>
                 <option value={15}>15 dias</option>
                 <option value={30}>30 dias</option>
+                <option value={45}>45 dias</option>
+                <option value={60}>60 dias</option>
+
+
             </select>
         </div>
     );

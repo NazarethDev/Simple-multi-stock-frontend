@@ -15,6 +15,16 @@ export async function getExpiringSoonProducts({ days, page, limit }) {
     });
 };
 
+export async function getExpiredProducts({ days, page, limit }) {
+    return axios.get(PRODUCTS_API_BASE_URL + "/expired-products", {
+        params: {
+            days,
+            page,
+            limit
+        }
+    });
+};
+
 export async function createNewProduct(data) {
     return axios.post(PRODUCTS_API_BASE_URL, data);
 };
