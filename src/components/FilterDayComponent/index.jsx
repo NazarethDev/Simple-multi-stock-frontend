@@ -5,7 +5,7 @@ export default function DaysFilterComponent({
     return (
         <div className="mb-3 d-flex align-items-center gap-2">
             <label htmlFor="daysSelect" className="form-label mb-0">
-                Mostrar produtos que vencem em:
+                Mostrar produtos em:
             </label>
 
             <select
@@ -23,6 +23,7 @@ export default function DaysFilterComponent({
                 <option value={30}>30 dias</option>
                 <option value={45}>45 dias</option>
                 <option value={60}>60 dias</option>
+                <option value={90}>90 dias</option>
 
 
             </select>
