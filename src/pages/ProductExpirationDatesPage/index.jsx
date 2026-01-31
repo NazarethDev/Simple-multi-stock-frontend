@@ -47,7 +47,7 @@ export default function ProductExpirationDatesPage() {
             }} />
 
             <div className="row g-3 mt-2">
-                {!loading && products.map(product => (
+                {!loading && products?.map(product => (
                     <ProductListCardComponent
                         key={product._id}
                         product={product}
