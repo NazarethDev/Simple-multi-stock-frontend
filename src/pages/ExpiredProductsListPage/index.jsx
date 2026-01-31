@@ -45,13 +45,28 @@ export default function ExpiredProductsListPage() {
             }} />
 
             <div className="row g-3 mt-2">
-                {!loading && products.map(product => (
-                    <ProductListCardComponent
-                        key={product._id}
-                        product={product}
-                        onClick={(product) => setSelectedProduct(product)}
-                    />
-                ))}
+                {loading ? (
+                    // Estado de Carregamento
+                    <div className="col-12 text-center py-5">
+                        <div className="spinner-border text-danger" role="status">
+                            <span className="visually-hidden">Carregando...</span>
+                        </div>
+                        <p className="mt-2 text-muted">Consultando histórico de vencimentos...</p>
+                    </div>
+                ) : products.length > 0 ? (
+                    products.map(product => (
+                        <ProductListCardComponent
+                            key={product._id}
+                            product={product}
+                            onClick={(product) => setSelectedProduct(product)}
+                        />
+                    ))
+                ) : (
+                    <div className="col-12 text-center py-5 border rounded bg-light">
+                        <i className="bi bi-box-seam fs-1 text-muted"></i>
+                        <h5 className="mt-3 text-muted">Nenhum produto expirado nos últimos {days} dias.</h5>
+                    </div>
+                )}
             </div>
 
             <PaginationComponent
