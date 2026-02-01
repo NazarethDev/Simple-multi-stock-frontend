@@ -13,10 +13,9 @@ export default function StatisticsPage() {
     async function fetchData(months) {
         try {
             setLoading(true);
-            const [finance, products] = await Promise.all([findFinanceLosses(months), findExpiredProductsByStore(months)]);
+            const finance = await findFinanceLosses(months);
 
             setFinanceData(finance);
-            setQuantityByStore(products);
 
         } catch (error) {
             console.error(`Erro ao buscar dados: ${error}`);

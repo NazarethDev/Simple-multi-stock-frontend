@@ -55,7 +55,8 @@ export async function findExpiredProductsByStore(months) {
 }
 
 export async function findFinanceLosses(months) {
-    return axios.get(STATISTICS_API_BASE_URL + FIND_FINANCE_LOSSES, {
+    const response = await axios.get(STATISTICS_API_BASE_URL + FIND_FINANCE_LOSSES, {
         params: { months }
     });
+    return response.data;
 }
