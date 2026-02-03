@@ -49,10 +49,12 @@ export async function updateNameAndCost(productId, data) {
 }
 
 export async function findExpiredProductsByStore(months) {
-    return axios.get(STATISTICS_API_BASE_URL + FIND_EXPIRED_PRODUCTS_QUANTITY_BY_STORE, {
+    const response = await axios.get(STATISTICS_API_BASE_URL + FIND_EXPIRED_PRODUCTS_QUANTITY_BY_STORE, {
         params: { months }
     });
+    return response.data;
 }
+
 
 export async function findFinanceLosses(months) {
     const response = await axios.get(STATISTICS_API_BASE_URL + FIND_FINANCE_LOSSES, {
