@@ -1,27 +1,30 @@
 import { useState, useEffect } from "react";
 
-import { findFinanceLosses, findExpiredProductsByStore } from "../../services/multiStockApi.js";
+import { findFinanceLosses, findExpiredProductsByStore, findTopExpiredQuantities } from "../../services/multiStockApi.js";
 import FilterMonthsComponent from "../../components/FilterMonthsComponent/index.jsx";
 import FinanceLossesComponent from "../../components/FinanceLossesComponent/index.jsx";
 import ProductsLossesComponent from "../../components/ProductsLossesComponent/index.jsx";
+import TopExpiredProductsComponet from "../../components/TopExpiredProductsComponet/index.jsx";
 
 export default function StatisticsPage() {
     const [months, setMonths] = useState(1)
     const [loading, setLoading] = useState(false);
     const [financeData, setFinanceData] = useState(null);
     const [quantityByStore, setQuantityByStore] = useState(null);
+    const [topQuantities, setTopquantities] = useState(null)
 
     async function fetchData(selectedMonths) {
         try {
             setLoading(true);
-            // Use nomes diferentes aqui para não confundir com os nomes do useState
-            const [resFinance, resQuantity] = await Promise.all([
+            const [resFinance, resQuantity, resTopQuantities] = await Promise.all([
                 findFinanceLosses(selectedMonths),
-                findExpiredProductsByStore(selectedMonths)
+                findExpiredProductsByStore(selectedMonths),
+                findTopExpiredQuantities(selectedMonths)
             ]);
 
             setFinanceData(resFinance);
             setQuantityByStore(resQuantity);
+            setTopquantities(resTopQuantities);
 
         } catch (error) {
             console.error(`Erro ao buscar dados: ${error}`);
@@ -48,8 +51,10 @@ export default function StatisticsPage() {
                         {financeData ? <FinanceLossesComponent data={financeData} /> : <p>Sem dados financeiros.</p>}
                     </div>
                     <div className="col-12">
-                        {/* Remova a condicional estrita para testar se o componente monta */}
                         <ProductsLossesComponent data={quantityByStore} />
+                    </div>
+                    <div className="col-12">
+                        <TopExpiredProductsComponet data={topQuantities} />
                     </div>
                 </div>
             )}

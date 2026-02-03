@@ -1,7 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function ProductsLossesComponent({ data }) {
-    // Log para depuração: Se isso não aparecer no console, o componente não foi chamado
     console.log("Dados recebidos no componente de Quantidade:", data);
 
     if (!data) return <div className="alert alert-warning">Aguardando dados...</div>;
@@ -25,7 +24,6 @@ export default function ProductsLossesComponent({ data }) {
                         <small className="text-muted">unidades</small>
                     </div>
                     <div className="col-md-9" style={{ minHeight: '300px' }}>
-                        {/* Adicionamos debounce para evitar o erro de width(-1) */}
                         <ResponsiveContainer width="100%" height={300} debounce={50}>
                             <BarChart data={chartData}>
                                 <XAxis dataKey="name" />

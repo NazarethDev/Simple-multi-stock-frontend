@@ -9,7 +9,8 @@ const UPDATE_PRODUCT_NAME_AND_COST = "/update-cost-and-name/";
 const FIND_EXPIRING_PRODUCTS_LIST = "/expiring-soon";
 const FIND_EXPIRED_PRODUCTS_LIST = "/expired-products";
 const FIND_EXPIRED_PRODUCTS_QUANTITY_BY_STORE = "/expired-products-by-store";
-const FIND_FINANCE_LOSSES = "/expired-products-costs-by-store"
+const FIND_FINANCE_LOSSES = "/expired-products-costs-by-store";
+const FIND_TOP_EXPIRED_PRODUCTS = "/top-expired-products"
 
 export async function getExpiringSoonProducts({ days, page, limit }) {
     return axios.get(PRODUCTS_API_BASE_URL + FIND_EXPIRING_PRODUCTS_LIST, {
@@ -58,6 +59,13 @@ export async function findExpiredProductsByStore(months) {
 
 export async function findFinanceLosses(months) {
     const response = await axios.get(STATISTICS_API_BASE_URL + FIND_FINANCE_LOSSES, {
+        params: { months }
+    });
+    return response.data;
+}
+
+export async function findTopExpiredQuantities(months) {
+    const response = await axios.get(STATISTICS_API_BASE_URL + FIND_TOP_EXPIRED_PRODUCTS, {
         params: { months }
     });
     return response.data;
