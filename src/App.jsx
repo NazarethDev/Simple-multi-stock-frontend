@@ -7,14 +7,16 @@ import FooterComponent from "./components/FooterComponent/index.jsx"
 import './App.css'
 
 function App() {
-
   return (
     <BrowserRouter>
-      <HeaderComponent />
-      <main className="pt-5 min-vh-100 overflow-x-hidden">
-        <AppRoutes />
-      </main>
-      <FooterComponent />
+        <HeaderComponent />
+        
+        {/* flex-fill força o elemento a ocupar todo o espaço vertical disponível */}
+        <main className="flex-fill pt-5 overflow-x-hidden">
+          <AppRoutes />
+        </main>
+
+        <FooterComponent />
     </BrowserRouter>
   )
 }
