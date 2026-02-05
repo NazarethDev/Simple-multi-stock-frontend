@@ -38,7 +38,6 @@ export async function createNewProduct(data) {
 
 export async function updateProduct(productId, data) {
     return axios.put(PRODUCTS_API_BASE_URL + UPDATE_PRODUCT_API_URL_COMPLEMENT + "/" + productId, data);
-
 };
 
 export async function findByBarCode(eanCode) {
@@ -46,7 +45,7 @@ export async function findByBarCode(eanCode) {
 };
 
 export async function updateNameAndCost(productId, data) {
-    return axios.patch(PRODUCTS_API_BASE_URL + "/" + UPDATE_PRODUCT_NAME_AND_COST + productId, data)
+    return axios.patch(PRODUCTS_API_BASE_URL + UPDATE_PRODUCT_NAME_AND_COST + productId, data)
 }
 
 export async function findExpiredProductsByStore(months) {
