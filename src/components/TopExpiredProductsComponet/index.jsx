@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
-export default function TopExpiredProductsComponet({ data }) {
+export default function TopExpiredProductsComponent({ data }) {
     if (!data || data.length === 0) return null;
 
     return (
@@ -11,7 +11,6 @@ export default function TopExpiredProductsComponet({ data }) {
             <div className="card-body">
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer width="100%" height="100%">
-                        {/* layout="vertical" transforma o gráfico em horizontal */}
                         <BarChart
                             layout="vertical"
                             data={data}
@@ -19,19 +18,19 @@ export default function TopExpiredProductsComponet({ data }) {
                         >
                             <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
 
-                            {/* O Eixo X agora mostra os valores (quantidades) */}
-                            <XAxis type="number" />
+                            <XAxis type="number" hide />
 
-                            {/* O Eixo Y agora mostra os nomes (type="category") */}
                             <YAxis
                                 dataKey="name"
                                 type="category"
                                 width={90}
-                                style={{ fontSize: '12px', fontWeight: 'bold' }}
+                                tick={{ fill: '#0dcaf0', fontSize: '12px', fontWeight: 'bold' }}
                             />
 
                             <Tooltip
                                 formatter={(value) => [`${value} unidades`, "Perda Total"]}
+                                labelStyle={{ color: "black" }}
+                                cursor={{ fill: 'transparent' }}
                             />
 
                             <Bar
@@ -39,6 +38,7 @@ export default function TopExpiredProductsComponet({ data }) {
                                 fill="#0dcaf0"
                                 radius={[0, 4, 4, 0]}
                                 barSize={25}
+                                style={{ cursor: 'pointer' }}
                             />
                         </BarChart>
                     </ResponsiveContainer>
@@ -46,5 +46,4 @@ export default function TopExpiredProductsComponet({ data }) {
             </div>
         </div>
     );
-
 }

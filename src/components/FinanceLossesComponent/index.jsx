@@ -21,7 +21,6 @@ export default function FinanceLossesComponent({ data }) {
             </div>
             <div className="card-body">
                 <div className="row align-items-center">
-                    {/* Resumo em texto (Lado Esquerdo) */}
                     <div className="col-md-3 text-center border-end">
                         <p className="text-muted mb-1">Prejuízo Total</p>
                         <h3 className="fw-bold text-danger">
@@ -30,7 +29,6 @@ export default function FinanceLossesComponent({ data }) {
                         <small className="text-muted">Valor em estoque</small>
                     </div>
 
-                    {/* Gráfico (Lado Direito) */}
                     <div className="col-md-9">
                         <div style={{ width: '100%', height: 300 }}>
                             <ResponsiveContainer width="100%" height="100%" debounce={50}>
