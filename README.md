@@ -2,7 +2,7 @@
 
 Este é o cliente web da plataforma **Multi Stock**, desenvolvido para oferecer uma interface intuitiva na gestão de estoques e monitoramento de validades de uma rede de lojas. 
 
-O projeto consome a [Multi Stock API](https://github.com/NazarethDev/Simple-multi-stock-api) para centralizar informações de diferentes unidades geográficas.
+O projeto consome a [Multi Stock API](https://github.com/NazarethDev/simple-multi-stock-personal-backend) para centralizar informações de diferentes unidades geográficas.
 
 Caso deseje, há uma versão de demonstração da API em execução com fake data disponível [neste link](https://simple-multi-stock-app-git-develop-nazarethdevs-projects.vercel.app/).
 
