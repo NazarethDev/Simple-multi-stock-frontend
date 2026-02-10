@@ -1,16 +1,60 @@
-# React + Vite
+# Multi Stock Frontend 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o cliente web da plataforma **Multi Stock**, desenvolvido para oferecer uma interface intuitiva na gestão de estoques e monitoramento de validades de uma rede de lojas. 
 
-Currently, two official plugins are available:
+O projeto consome a [Multi Stock API](https://github.com/NazarethDev/Simple-multi-stock-api) para centralizar informações de diferentes unidades geográficas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Caso deseje, há uma versão de demonstração da API em execução com fake data disponível [neste link](https://simple-multi-stock-app-git-develop-nazarethdevs-projects.vercel.app/).
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Como executar o projeto
 
-## Expanding the ESLint configuration
+1. **Clone o repositório:**
+```bash
+   git clone https://github.com/NazarethDev/Simple-multi-stock-frontend
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Instale as dependências:**
+```bash
+npm install
+```
+
+3. **Configure as variáveis de ambiente:** Crie um arquivo .env na raiz do projeto e adicione a URL da sua API:
+```Snippet de código
+VITE_API_URL=http://localhost:SUA_PORTA_DA_API
+```
+
+4. **Inicie o servidor de desenvolvimento:**
+```bash
+npm run dev
+```
+
+## 📍 Navegação e Rotas
+A aplicação está organizada nas seguintes páginas:
+
+| Rota                  | Componente                    | Descrição                                                                 |
+|-----------------------|-------------------------------|---------------------------------------------------------------------------|
+| /                     | InitialPage                   | Painel principal com acesso rápido às funcionalidades.                     |
+| /lista-de-validades   | ProductExpirationDatesPage    | Visualização de produtos próximos ao vencimento.                           |
+| /produtos-vencidos    | ExpiredProductsListPage       | Listagem histórica de itens já expirados (últimos 90 dias).                |
+| /procurar-por-codigo  | FindProductByBarCode          | Busca rápida de produtos via EAN/Código de Barras.                         |
+| /novo-produto         | NewProductsPage               | Formulário para cadastro de novos itens no sistema.                        |
+| /atualizar-dados-base | UpdateNameAndCostPage         | Interface para edição de nomes, custos e datas.                            |
+| /estatisticas         | StatisticsPage                | Dashboard com gráficos de perdas financeiras e produtos mais expirados.   |
+
+## 🛠️ Tecnologias Utilizadas
+
+- React.js: Biblioteca base para a construção da interface.
+- React Router Dom: Gerenciamento de navegação entre páginas.
+- Axios: Cliente HTTP para consumo da API.
+- Vite: Ferramenta de build e servidor de desenvolvimento.
+
+## 💡 Funcionalidades Chave
+- Controle Multiloja: Interface preparada para exibir saldos de estoque divididos por unidades (Guaianases, Tiradentes, Ferraz, etc).
+- Gestão de Perdas: Área dedicada a estatísticas que transformam dados de vencimento em valores monetários, facilitando a tomada de decisão.
+- Escalabilidade: Pronto para integração futura com sistemas de frente de caixa (TPS).
+
+## 🔗 Links Úteis
+- Backend/API: https://github.com/NazarethDev/simple-multi-stock-personal-backend
+- Deploy: https://simple-multi-stock-app-git-develop-nazarethdevs-projects.vercel.app/
