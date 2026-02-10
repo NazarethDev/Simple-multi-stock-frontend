@@ -4,7 +4,7 @@ Este é o cliente web da plataforma **Multi Stock**, desenvolvido para oferecer 
 
 O projeto consome a [Multi Stock API](https://github.com/NazarethDev/simple-multi-stock-personal-backend) para centralizar informações de diferentes unidades geográficas.
 
-Caso deseje, há uma versão de demonstração da API em execução com fake data disponível [neste link](https://simple-multi-stock-app-git-develop-nazarethdevs-projects.vercel.app/).
+Caso deseje, há uma versão de demonstração da API em execução com fake data disponível [neste link](https://simple-multi-stock-app.vercel.app/).
 
 ---
 
@@ -57,4 +57,4 @@ A aplicação está organizada nas seguintes páginas:
 
 ## 🔗 Links Úteis
 - Backend/API: https://github.com/NazarethDev/simple-multi-stock-personal-backend
-- Deploy: https://simple-multi-stock-app-git-develop-nazarethdevs-projects.vercel.app/
+- Deploy: https://simple-multi-stock-app.vercel.app/
